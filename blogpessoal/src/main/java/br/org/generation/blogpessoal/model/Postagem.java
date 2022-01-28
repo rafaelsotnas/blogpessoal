@@ -15,27 +15,31 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity //inserir tabela
-@Table(name="tb_postagens") //criar nome da tabela
+@Entity 
+@Table(name="tb_postagens") 
 public class Postagem {
-    @Id //primary key(id)
-    @GeneratedValue(strategy=GenerationType.IDENTITY) //auto increment
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-    @NotBlank(message="A inserção do título é obrigatória.") //título obrigatório
-    @Size(min=5, max=100, message="Título deve conter entre 5 e 100 caracteres.") //tamanho dos caracteres
+    @NotBlank(message="A inserção do título é obrigatória.") 
+    @Size(min=5, max=100, message="Título deve conter entre 5 e 100 caracteres.") 
 	private String titulo;
 
     @NotBlank(message="A inserção do texto é obrigatória.")
     @Size(min=10, max=1000, message="Texto deve conter entre 10 e 1000 caracteres.")
 	private String texto;
 
-    @UpdateTimestamp //inserir data local
+    @UpdateTimestamp
 	private LocalDateTime data;
     
     @ManyToOne
     @JsonIgnoreProperties("postagem")
     private Tema tema;
+    
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Usuario usuario;
 	
     public Long getId() {
 		return id;
@@ -75,6 +79,13 @@ public class Postagem {
 
 	public void setTema(Tema tema) {
 		this.tema = tema;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }
 
