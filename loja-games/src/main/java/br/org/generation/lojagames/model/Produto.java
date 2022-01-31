@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -20,14 +20,14 @@ public class Produto {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message="É obrigatório inserir o nome do game.")
+	@NotNull(message="É obrigatório inserir o nome do game.")
 	private String nome;
 	
-	@NotBlank(message="É obrigatório inserir a descrição do game.")
+	@NotNull(message="É obrigatório inserir a descrição do game.")
 	@Size(max=300)
 	private String definicao;
 	
-	@NotBlank(message="É obrigatório inserir a qual console o game pertence.")
+	@NotNull(message="É obrigatório inserir a qual console o game pertence.")
 	private String console;
 	
 	private int quantidade;
@@ -39,6 +39,10 @@ public class Produto {
     @ManyToOne
     @JsonIgnoreProperties("produto")
     private Categoria categoria;
+    
+    @ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Usuario usuario;
 
 	public Long getId() {
 		return id;
@@ -102,5 +106,13 @@ public class Produto {
 
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }
