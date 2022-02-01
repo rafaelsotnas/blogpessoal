@@ -129,7 +129,7 @@ public class UsuarioControllerTest {
 			
 		ResponseEntity<String>resposta=testRestTemplate
 					.withBasicAuth("root", "root")
-					.exchange("/usuarios/1", HttpMethod.GET, null, String.class);
+					.exchange("/usuarios/2", HttpMethod.GET, null, String.class);
 		
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());		
 	}
