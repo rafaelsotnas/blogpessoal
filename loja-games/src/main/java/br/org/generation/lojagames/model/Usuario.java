@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -23,10 +22,10 @@ public class Usuario {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotNull(message="A inserção do nome é obrigatória.")
+	@NotBlank(message="A inserção do nome é obrigatória.")
 	private String nome;
 
-	@NotNull(message="A inserção do usuário é obrigatória.")
+	@NotBlank(message="A inserção do usuário é obrigatória.")
 	@Email(message="O usuário deve conter um e-mail válido.")
 	private String usuario;
 	
@@ -37,7 +36,7 @@ public class Usuario {
 	@OneToMany(mappedBy="usuario", cascade=CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
 	private List<Produto> produto;
-
+	
 	public Long getId() {
 		return id;
 	}

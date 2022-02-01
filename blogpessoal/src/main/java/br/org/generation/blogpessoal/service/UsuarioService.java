@@ -28,19 +28,16 @@ public class UsuarioService {
 	public Optional<Usuario> atualizarUsuario(Usuario usuario) {
 		if(usuarioRepository.findById(usuario.getId()).isPresent()) {
 			Optional<Usuario> buscarUsuario=usuarioRepository.findByUsuario(usuario.getUsuario());
-			
 			if((buscarUsuario.isPresent())&&(buscarUsuario.get().getId()!=usuario.getId()))
 				throw new ResponseStatusException(
-						HttpStatus.BAD_REQUEST, "Usuário já cadastrado.", null);
-			usuario.setSenha(criptografarSenha(usuario.getSenha()));
-			
-			return Optional.ofNullable(usuarioRepository.save(usuario));
+				HttpStatus.BAD_REQUEST, "Usuário já cadastrado.", null);
+			    usuario.setSenha(criptografarSenha(usuario.getSenha()));
+				return Optional.ofNullable(usuarioRepository.save(usuario));
 		    }
 		    return Optional.empty();
 	        }
 	        public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
 	    	  Optional<Usuario> usuario=usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
-	    	  
 	    	   if(usuario.isPresent()) {
 	    		if(compararSenhas(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
 	    			usuarioLogin.get().setId(usuario.get().getId());
